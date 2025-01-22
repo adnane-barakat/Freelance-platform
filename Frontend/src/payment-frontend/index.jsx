@@ -3,21 +3,21 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from './CheckoutForm';
 
-const stripePromise = loadStripe('pk_test_51Qg8EpKD44DTCNGUGEvR5q7FRSWV00VP78Hek0KRZvnupim45MjNXjVDXk5RJ8ElGmDRzAGc2NQah122Naz1ZvJ600EUcRB7nP'); // Replace with your Stripe Publishable Key
+const stripePromise = loadStripe('your_public_stripe_api_key');
 
 const Checkout = () => {
     const [clientSecret, setClientSecret] = useState("");
-    const isFetched = useRef(false); // Persistent reference to track if the API has been called
+    const isFetched = useRef(false); 
 
-    // Fetch clientSecret from the backend
+    
     useEffect(() => {
-        if (isFetched.current) return; // Prevent duplicate fetches
+        if (isFetched.current) return; 
         isFetched.current = true;
 
         fetch("http://localhost:8005/api/payments/create", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ amount: 5000, currency: "usd" }), // Example amount ($50)
+            body: JSON.stringify({ amount: 5000, currency: "usd" }), 
         })
             .then((res) => res.json())
             .then((data) => {
@@ -25,7 +25,7 @@ const Checkout = () => {
                 setClientSecret(data.clientSecret);
             })
             .catch((error) => {
-                console.error("Error fetching client secret:", error); // Log errors
+                console.error("Error fetching client secret:", error); 
             });
     }, []);
 
